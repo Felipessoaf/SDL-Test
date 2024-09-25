@@ -147,6 +147,7 @@ xcopy /y /d "$(SolutionDir)..\Deps\SDL\SDL2_image.dll" "$(OutDir)"</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.hpp" />
+    <ClInclude Include="Math.hpp" />
     <ClInclude Include="RenderWindow.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
