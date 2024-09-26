@@ -16,7 +16,7 @@ RenderWindow::RenderWindow(const char* title, int w, int h)
 		std::cout << "Window failed to init: " << SDL_GetError() << std::endl;
 	}
 
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 }
 
 SDL_Texture* RenderWindow::LoadTexture(const char* filePath)
@@ -31,6 +31,16 @@ SDL_Texture* RenderWindow::LoadTexture(const char* filePath)
 	}
 
 	return texture;
+}
+
+int RenderWindow::GetRefreshRate()
+{
+	int displayIndex = SDL_GetWindowDisplayIndex(window);
+
+	SDL_DisplayMode mode;
+	SDL_GetDisplayMode(displayIndex, 0, &mode);
+
+	return mode.refresh_rate;
 }
 
 void RenderWindow::CleanUp()

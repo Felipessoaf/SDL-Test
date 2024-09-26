@@ -6,6 +6,7 @@
 #include "RenderWindow.hpp"
 #include "Entity.hpp"
 #include "Math.hpp"
+#include "Utils.hpp"
 
 int main(int argc, char** argv)
 {
@@ -34,15 +35,35 @@ int main(int argc, char** argv)
 
 	SDL_Event event;
 
+	const float timeStep = 0.01f;
+	float accumulator = 0.0f;
+	float currentTime = Utils::HireTimeInSeconds();
+
 	while (gameRunning)
 	{
-		while (SDL_PollEvent(&event))
+		int startTicks = SDL_GetTicks();
+
+		float newTime = Utils::HireTimeInSeconds();
+		float frameTime = newTime - currentTime;
+
+		currentTime = newTime;
+
+		accumulator += frameTime;
+
+		while (accumulator >= timeStep)
 		{
-			if (event.type == SDL_QUIT)
+			while (SDL_PollEvent(&event))
 			{
-				gameRunning = false;
+				if (event.type == SDL_QUIT)
+				{
+					gameRunning = false;
+				}
 			}
+
+			accumulator -= timeStep;
 		}
+
+		const float alpha = accumulator / timeStep;
 
 		window.Clear();
 
@@ -52,6 +73,12 @@ int main(int argc, char** argv)
 		}
 
 		window.Display();
+
+		int frameTicks = SDL_GetTicks() - startTicks;
+		if (frameTicks < 1000 / window.GetRefreshRate())
+		{
+			SDL_Delay(1000 / window.GetRefreshRate() - frameTicks);
+		}
 	}
 
 	window.CleanUp();
