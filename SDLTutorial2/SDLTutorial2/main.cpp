@@ -1,20 +1,17 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <Windows.h>
+#include <GL/glew.h>
+
+//#include <SDL/SDL.h>
+//#include <SDL/SDL_image.h>
+//
 #include <iostream>
+
+#include "MainGame.h"
 
 int main(int argc, char** argv)
 {
-	if (SDL_Init(SDL_INIT_VIDEO) > 0)
-	{
-		std::cout << "sdl init video failed: " << SDL_GetError() << std::endl;
-	}
-
-	if (!IMG_Init(IMG_INIT_PNG))
-	{
-		std::cout << "img init failed: " << SDL_GetError() << std::endl;
-	}
-
-	SDL_Quit();
+	MainGame mainGame;
+	mainGame.Run();
 	
 	return 0;
 }
