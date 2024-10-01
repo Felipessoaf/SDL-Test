@@ -21,6 +21,7 @@ private:
 	void InitSystems();
 	void GameLoop();
 	void ProcessInput();
+	void DrawGame();
 
 	SDL_Window* _window = nullptr;
 	int _screenWidth;
