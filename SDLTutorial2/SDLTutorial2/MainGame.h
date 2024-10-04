@@ -27,7 +27,7 @@ private:
 	void ProcessInput();
 	void DrawGame();
 
-	SDL_Window* _window = nullptr;
+	SDL_Window* _window;
 	int _screenWidth;
 	int _screenHeight;
 
@@ -36,5 +36,7 @@ private:
 	Sprite _sprite;
 
 	GLSLProgram _colorProgram;
+
+	float _time;
 };
 

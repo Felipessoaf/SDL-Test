@@ -154,6 +154,7 @@ xcopy /y /d "$(SolutionDir)..\Deps\GLEW\glew32d.dll" "$(OutDir)"</Command>
     <ClInclude Include="GLSLProgram.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

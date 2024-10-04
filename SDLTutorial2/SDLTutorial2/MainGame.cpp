@@ -5,7 +5,7 @@
 #include <string>
 
 MainGame::MainGame()
-	: _screenWidth(1024), _screenHeight(720), _gameState(GameState::PLAY)
+	: _window(nullptr), _screenWidth(1024), _screenHeight(720), _gameState(GameState::PLAY), _time(0.0f)
 {
 }
 
@@ -17,7 +17,7 @@ void MainGame::Run()
 {
 	InitSystems();
 
-	_sprite.Init(-1.0f, -1.0f, 1.0f, 1.0f);
+	_sprite.Init(-1.0f, -1.0f, 2.0f, 2.0f);
 
 	GameLoop();
 }
@@ -56,6 +56,7 @@ void MainGame::InitShaders()
 {
 	_colorProgram.CompileShaders("Shaders/ColorShading.vert", "Shaders/ColorShading.frag");
 	_colorProgram.AddAttribute("vertexPosition");
+	_colorProgram.AddAttribute("vertexColor");
 	_colorProgram.LinkShaders();
 }
 
@@ -64,6 +65,7 @@ void MainGame::GameLoop()
 	while (_gameState != GameState::EXIT)
 	{
 		ProcessInput();
+		_time += 0.01f;
 		DrawGame();
 	}
 }
@@ -94,6 +96,10 @@ void MainGame::DrawGame()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	_colorProgram.Use();
+
+	GLuint timeLocation = _colorProgram.GetUniformLocation("time");
+	glUniform1f(timeLocation, _time);
+
 	_sprite.Draw();
 	_colorProgram.Unuse();
 

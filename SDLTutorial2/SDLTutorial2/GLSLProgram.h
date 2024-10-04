@@ -12,6 +12,9 @@ public:
 	void CompileShaders(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath);
 	void LinkShaders();
 	void AddAttribute(const std::string& attributeName);
+
+	GLuint GetUniformLocation(const std::string uniformName);
+
 	void Use();
 	void Unuse();
 
