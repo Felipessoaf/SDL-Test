@@ -1,5 +1,6 @@
 #include "MainGame.h"
 #include "Errors.h"
+#include "ImageLoader.h"
 
 #include <iostream>
 #include <string>
@@ -18,6 +19,8 @@ void MainGame::Run()
 	InitSystems();
 
 	_sprite.Init(-1.0f, -1.0f, 2.0f, 2.0f);
+
+	_playerTexture = ImageLoader::LoadPNG("Textures/character/idle/i1.png");
 
 	GameLoop();
 }
@@ -57,6 +60,7 @@ void MainGame::InitShaders()
 	_colorProgram.CompileShaders("Shaders/ColorShading.vert", "Shaders/ColorShading.frag");
 	_colorProgram.AddAttribute("vertexPosition");
 	_colorProgram.AddAttribute("vertexColor");
+	_colorProgram.AddAttribute("vertexUV");
 	_colorProgram.LinkShaders();
 }
 
@@ -96,11 +100,17 @@ void MainGame::DrawGame()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	_colorProgram.Use();
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, _playerTexture.id);
+	GLint textureLocation = _colorProgram.GetUniformLocation("mySampler");
+	glUniform1i(textureLocation, 0);
 
-	GLuint timeLocation = _colorProgram.GetUniformLocation("time");
+	GLint timeLocation = _colorProgram.GetUniformLocation("time");
 	glUniform1f(timeLocation, _time);
 
 	_sprite.Draw();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	_colorProgram.Unuse();
 
 	SDL_GL_SwapWindow(_window);
