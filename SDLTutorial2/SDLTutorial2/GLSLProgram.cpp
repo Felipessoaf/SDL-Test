@@ -81,9 +81,9 @@ void GLSLProgram::AddAttribute(const std::string& attributeName)
 	glBindAttribLocation(_programID, _numAttributes++, attributeName.c_str());
 }
 
-GLuint GLSLProgram::GetUniformLocation(const std::string uniformName)
+GLint GLSLProgram::GetUniformLocation(const std::string uniformName)
 {
-	GLuint location = glGetUniformLocation(_programID, uniformName.c_str());
+	GLint location = glGetUniformLocation(_programID, uniformName.c_str());
 
 	if (location == GL_INVALID_INDEX)
 	{
