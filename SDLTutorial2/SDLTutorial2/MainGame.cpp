@@ -1,6 +1,5 @@
 #include "MainGame.h"
 #include "Errors.h"
-#include "ImageLoader.h"
 
 #include <iostream>
 #include <string>
@@ -18,9 +17,10 @@ void MainGame::Run()
 {
 	InitSystems();
 
-	_sprite.Init(-1.0f, -1.0f, 2.0f, 2.0f);
-
-	_playerTexture = ImageLoader::LoadPNG("Textures/character/idle/i1.png");
+	_sprites.push_back(new Sprite());
+	_sprites.back()->Init(-1.0f, -1.0f, 1.0f, 1.0f, "Textures/character/idle/i1.png");
+	_sprites.push_back(new Sprite());
+	_sprites.back()->Init(0.0f, -1.0f, 1.0f, 1.0f, "Textures/character/idle/i1.png");
 
 	GameLoop();
 }
@@ -86,7 +86,7 @@ void MainGame::ProcessInput()
 				_gameState = GameState::EXIT;
 				break;
 			case SDL_MOUSEMOTION:
-				std::cout << ev.motion.x << " " << ev.motion.y << std::endl;
+				//std::cout << ev.motion.x << " " << ev.motion.y << std::endl;
 				break;
 			default:
 				break;
@@ -101,14 +101,16 @@ void MainGame::DrawGame()
 
 	_colorProgram.Use();
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _playerTexture.id);
 	GLint textureLocation = _colorProgram.GetUniformLocation("mySampler");
 	glUniform1i(textureLocation, 0);
 
 	GLint timeLocation = _colorProgram.GetUniformLocation("time");
 	glUniform1f(timeLocation, _time);
 
-	_sprite.Draw();
+	for (int i = 0; i < _sprites.size(); i++)
+	{
+		_sprites[i]->Draw();
+	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	_colorProgram.Unuse();
