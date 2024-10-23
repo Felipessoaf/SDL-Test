@@ -138,8 +138,10 @@
     <ClCompile Include="IOManager.cpp" />
     <ClCompile Include="picoPNG.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SDLEngine.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextureCache.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Errors.h" />
@@ -149,9 +151,11 @@
     <ClInclude Include="IOManager.h" />
     <ClInclude Include="picoPNG.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SDLEngine.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextureCache.h" />
     <ClInclude Include="Vertex.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

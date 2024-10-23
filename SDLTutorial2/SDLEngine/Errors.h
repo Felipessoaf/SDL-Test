@@ -2,4 +2,7 @@
 
 #include <string>
 
-extern void FatalError(std::string errorString);
+namespace SDLEngine
+{
+	extern void FatalError(std::string errorString);
+}

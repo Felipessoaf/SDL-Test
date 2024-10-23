@@ -4,23 +4,25 @@
 
 #include <string>
 
-class Sprite
+namespace SDLEngine
 {
-public:
-	Sprite();
-	~Sprite();
+	class Sprite
+	{
+	public:
+		Sprite();
+		~Sprite();
 
-	void Init(float x, float y, float width, float height, std::string texturePath);
-	void Draw();
+		void Init(float x, float y, float width, float height, std::string texturePath);
+		void Draw();
 
-private:
-	float _x;
-	float _y;
-	float _width;
-	float _height;
+	private:
+		float _x;
+		float _y;
+		float _width;
+		float _height;
 
-	GLuint _vboID;
+		GLuint _vboID;
 
-	GLTexture _texture;
-};
-
+		GLTexture _texture;
+	};
+}

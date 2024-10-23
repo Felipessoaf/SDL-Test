@@ -5,10 +5,10 @@
 
 #include <vector>
 
-#include "GLSLProgram.h"
-#include "Sprite.h"
-
-#include "GLTexture.h"
+#include <SDLEngine/GLSLProgram.h>
+#include <SDLEngine/Sprite.h>		 
+#include <SDLEngine/GLTexture.h>
+#include <SDLEngine/Window.h>
 
 enum class GameState
 {
@@ -32,15 +32,15 @@ private:
 	void DrawGame();
 	void CalculateFPS();
 
-	SDL_Window* _window;
+	SDLEngine::Window _window;
 	int _screenWidth;
 	int _screenHeight;
 
 	GameState _gameState;
 
-	std::vector<Sprite*> _sprites;
+	std::vector<SDLEngine::Sprite*> _sprites;
 
-	GLSLProgram _colorProgram;
+	SDLEngine::GLSLProgram _colorProgram;
 
 	float _fps;
 	float _maxFPS;

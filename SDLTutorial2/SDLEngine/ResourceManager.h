@@ -2,12 +2,14 @@
 
 #include "TextureCache.h"
 
-class ResourceManager
+namespace SDLEngine
 {
-public:
-	static GLTexture GetTexture(std::string texturePath);
+	class ResourceManager
+	{
+	public:
+		static GLTexture GetTexture(std::string texturePath);
 
-private:
-	static TextureCache _textureCache;
-};
-
+	private:
+		static TextureCache _textureCache;
+	};
+}

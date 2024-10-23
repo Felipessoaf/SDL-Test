@@ -3,9 +3,12 @@
 #include "GLTexture.h"
 #include <string>
 
-class ImageLoader
+namespace SDLEngine
 {
-public:
-	static GLTexture LoadPNG(std::string filePath);
-};
+	class ImageLoader
+	{
+	public:
+		static GLTexture LoadPNG(std::string filePath);
+	};
+}
 

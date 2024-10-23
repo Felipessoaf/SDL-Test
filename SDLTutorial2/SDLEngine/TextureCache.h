@@ -4,15 +4,17 @@
 #include <string>
 #include "GLTexture.h"
 
-class TextureCache
+namespace SDLEngine
 {
-public:
-	TextureCache();
-	~TextureCache();
+	class TextureCache
+	{
+	public:
+		TextureCache();
+		~TextureCache();
 
-	GLTexture GetTexture(std::string texturePath);
+		GLTexture GetTexture(std::string texturePath);
 
-private:
-	std::map<std::string, GLTexture> _textureMap;
-};
-
+	private:
+		std::map<std::string, GLTexture> _textureMap;
+	};
+}

@@ -1,11 +1,12 @@
 #include "MainGame.h"
-#include "Errors.h"
+
+#include <SDLEngine/Errors.h>
+#include <SDLEngine/SDLEngine.h>
 
 #include <iostream>
 #include <string>
 
-MainGame::MainGame() : 
-	_window(nullptr), 
+MainGame::MainGame() :
 	_screenWidth(1024), 
 	_screenHeight(720), 
 	_gameState(GameState::PLAY), 
@@ -22,9 +23,9 @@ void MainGame::Run()
 {
 	InitSystems();
 
-	_sprites.push_back(new Sprite());
+	_sprites.push_back(new SDLEngine::Sprite());
 	_sprites.back()->Init(-1.0f, -1.0f, 1.0f, 1.0f, "Textures/character/idle/i1.png");
-	_sprites.push_back(new Sprite());
+	_sprites.push_back(new SDLEngine::Sprite());
 	_sprites.back()->Init(0.0f, -1.0f, 1.0f, 1.0f, "Textures/character/idle/i1.png");
 
 	GameLoop();
@@ -32,36 +33,9 @@ void MainGame::Run()
 
 void MainGame::InitSystems()
 {
-	SDL_Init(SDL_INIT_EVERYTHING);
+	SDLEngine::init();
 
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-	_window = SDL_CreateWindow("Game Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight, SDL_WINDOW_OPENGL);
-
-	if (_window == nullptr)
-	{
-		FatalError("sdl window create error");
-	}
-
-	SDL_GLContext glContext = SDL_GL_CreateContext(_window);
-	if (glContext == nullptr)
-	{
-		FatalError("sdl glContext create error");
-	}
-
-	GLenum error = glewInit();
-	if (error != GLEW_OK)
-	{
-		FatalError("glewInit error");
-	}
-
-	std::printf("*** OpenGL Version: %s ***\n", glGetString(GL_VERSION));
-
-	//background color
-	glClearColor(0.0f, 0.0f, 1.0f, 1);
-
-	//Set VSYNC
-	SDL_GL_SetSwapInterval(0);
+	_window.Create("Game Engine", _screenWidth, _screenHeight, 0);
 
 	InitShaders();
 }
@@ -143,7 +117,7 @@ void MainGame::DrawGame()
 	glBindTexture(GL_TEXTURE_2D, 0);
 	_colorProgram.Unuse();
 
-	SDL_GL_SwapWindow(_window);
+	_window.SwapBuffer();
 }
 
 void MainGame::CalculateFPS()
