@@ -34,6 +34,8 @@ void MainGame::InitSystems()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
 	_window = SDL_CreateWindow("Game Engine", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, _screenWidth, _screenHeight, SDL_WINDOW_OPENGL);
 
 	if (_window == nullptr)
@@ -53,9 +55,13 @@ void MainGame::InitSystems()
 		FatalError("glewInit error");
 	}
 
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	std::printf("*** OpenGL Version: %s ***\n", glGetString(GL_VERSION));
 
+	//background color
 	glClearColor(0.0f, 0.0f, 1.0f, 1);
+
+	//Set VSYNC
+	SDL_GL_SetSwapInterval(0);
 
 	InitShaders();
 }
