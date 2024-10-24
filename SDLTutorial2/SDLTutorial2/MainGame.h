@@ -9,6 +9,7 @@
 #include <SDLEngine/Sprite.h>		 
 #include <SDLEngine/GLTexture.h>
 #include <SDLEngine/Window.h>
+#include <SDLEngine/Camera2D.h>
 
 enum class GameState
 {
@@ -41,6 +42,7 @@ private:
 	std::vector<SDLEngine::Sprite*> _sprites;
 
 	SDLEngine::GLSLProgram _colorProgram;
+	SDLEngine::Camera2D _camera2D;
 
 	float _fps;
 	float _maxFPS;

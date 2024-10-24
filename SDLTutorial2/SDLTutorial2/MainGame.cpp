@@ -13,6 +13,7 @@ MainGame::MainGame() :
 	_time(0.0f),
 	_maxFPS(60.0f)
 {
+	_camera2D.Init(_screenWidth, _screenHeight);
 }
 
 MainGame::~MainGame()
@@ -24,9 +25,9 @@ void MainGame::Run()
 	InitSystems();
 
 	_sprites.push_back(new SDLEngine::Sprite());
-	_sprites.back()->Init(-1.0f, -1.0f, 1.0f, 1.0f, "Textures/character/idle/i1.png");
+	_sprites.back()->Init(0.0f, 0.0f, _screenWidth / 2, _screenWidth / 2, "Textures/character/idle/i1.png");
 	_sprites.push_back(new SDLEngine::Sprite());
-	_sprites.back()->Init(0.0f, -1.0f, 1.0f, 1.0f, "Textures/character/idle/i1.png");
+	_sprites.back()->Init(_screenWidth / 2, 0.0f, _screenWidth / 2, _screenWidth / 2, "Textures/character/idle/i1.png");
 
 	GameLoop();
 }
@@ -57,6 +58,9 @@ void MainGame::GameLoop()
 
 		ProcessInput();
 		_time += 0.01f;
+
+		_camera2D.Update();
+
 		DrawGame();
 		CalculateFPS();
 
@@ -80,6 +84,9 @@ void MainGame::ProcessInput()
 {
 	SDL_Event ev;
 
+	const float CAMERA_SPEED = 20.0f;
+	const float SCALE_SPEED = 0.1f;
+
 	while (SDL_PollEvent(&ev))
 	{
 		switch (ev.type)
@@ -89,6 +96,31 @@ void MainGame::ProcessInput()
 				break;
 			case SDL_MOUSEMOTION:
 				//std::cout << ev.motion.x << " " << ev.motion.y << std::endl;
+				break;
+			case SDL_KEYDOWN:
+				switch (ev.key.keysym.sym)
+				{
+					case SDLK_w:
+						_camera2D.SetPosition(_camera2D.GetPosition() + glm::vec2(0.0f, CAMERA_SPEED));
+						break;
+					case SDLK_s:
+						_camera2D.SetPosition(_camera2D.GetPosition() + glm::vec2(0.0f, -CAMERA_SPEED));
+						break;
+					case SDLK_a:
+						_camera2D.SetPosition(_camera2D.GetPosition() + glm::vec2(-CAMERA_SPEED, 0.0f));
+						break;
+					case SDLK_d:
+						_camera2D.SetPosition(_camera2D.GetPosition() + glm::vec2(CAMERA_SPEED, 0.0f));
+						break;
+					case SDLK_q:
+						_camera2D.SetScale(_camera2D.GetScale() + SCALE_SPEED);
+						break;
+					case SDLK_e:
+						_camera2D.SetScale(_camera2D.GetScale() - SCALE_SPEED);
+						break;
+					default:
+						break;
+				}
 				break;
 			default:
 				break;
@@ -108,6 +140,10 @@ void MainGame::DrawGame()
 
 	GLint timeLocation = _colorProgram.GetUniformLocation("time");
 	glUniform1f(timeLocation, _time);
+
+	GLint pLocation = _colorProgram.GetUniformLocation("P");
+	glm::mat4 cameraMatrix = _camera2D.GetCameraMatrix();
+	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
 	for (int i = 0; i < _sprites.size(); i++)
 	{
