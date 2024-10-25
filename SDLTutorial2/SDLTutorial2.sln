@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDLTutorial2", "SDLTutorial2\SDLTutorial2.vcxproj", "{AD49894E-399C-4F8A-A72B-CE5621272BA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{38A73659-2912-4F9A-AB01-222C3A689E78} = {38A73659-2912-4F9A-AB01-222C3A689E78}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDLEngine", "SDLEngine\SDLEngine.vcxproj", "{38A73659-2912-4F9A-AB01-222C3A689E78}"
 EndProject

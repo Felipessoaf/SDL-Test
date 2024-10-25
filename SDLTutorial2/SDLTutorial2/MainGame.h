@@ -10,6 +10,7 @@
 #include <SDLEngine/GLTexture.h>
 #include <SDLEngine/Window.h>
 #include <SDLEngine/Camera2D.h>
+#include <SDLEngine/SpriteBatch.h>
 
 enum class GameState
 {
@@ -39,10 +40,10 @@ private:
 
 	GameState _gameState;
 
-	std::vector<SDLEngine::Sprite*> _sprites;
-
 	SDLEngine::GLSLProgram _colorProgram;
 	SDLEngine::Camera2D _camera2D;
+
+	SDLEngine::SpriteBatch _spriteBatch;
 
 	float _fps;
 	float _maxFPS;

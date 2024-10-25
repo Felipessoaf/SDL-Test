@@ -2,6 +2,7 @@
 
 #include <SDLEngine/Errors.h>
 #include <SDLEngine/SDLEngine.h>
+#include <SDLEngine/ResourceManager.h>
 
 #include <iostream>
 #include <string>
@@ -24,11 +25,6 @@ void MainGame::Run()
 {
 	InitSystems();
 
-	_sprites.push_back(new SDLEngine::Sprite());
-	_sprites.back()->Init(0.0f, 0.0f, _screenWidth / 2, _screenWidth / 2, "Textures/character/idle/i1.png");
-	_sprites.push_back(new SDLEngine::Sprite());
-	_sprites.back()->Init(_screenWidth / 2, 0.0f, _screenWidth / 2, _screenWidth / 2, "Textures/character/idle/i1.png");
-
 	GameLoop();
 }
 
@@ -39,6 +35,8 @@ void MainGame::InitSystems()
 	_window.Create("Game Engine", _screenWidth, _screenHeight, 0);
 
 	InitShaders();
+
+	_spriteBatch.Init();
 }
 
 void MainGame::InitShaders()
@@ -145,10 +143,25 @@ void MainGame::DrawGame()
 	glm::mat4 cameraMatrix = _camera2D.GetCameraMatrix();
 	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-	for (int i = 0; i < _sprites.size(); i++)
+	_spriteBatch.Begin();
+
+	glm::vec4 pos(0.0f, 0.0f, 50.0f, 50.0f);
+	glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
+	static SDLEngine::GLTexture texture = SDLEngine::ResourceManager::GetTexture("Textures/character/idle/i1.png");
+	SDLEngine::Color color;
+	color.r = 255;
+	color.g = 255;
+	color.b = 255;
+	color.a = 255;
+
+	for (int i = 0; i < 1000; i++)
 	{
-		_sprites[i]->Draw();
+		_spriteBatch.Draw(pos, uv, texture.id, 0.0f, color);
+		_spriteBatch.Draw(pos + glm::vec4(50, 0, 0, 0), uv, texture.id, 0.0f, color);
 	}
+
+	_spriteBatch.End();
+	_spriteBatch.RenderBatch();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 	_colorProgram.Unuse();
