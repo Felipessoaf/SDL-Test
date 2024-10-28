@@ -15,6 +15,8 @@ namespace SDLEngine
 
 		void Update();
 
+		glm::vec2 ConvertScreenToWorld(glm::vec2 screenCoords);
+
 		void SetPosition(const glm::vec2& newPosition) 
 		{ 
 			_position = newPosition; 

@@ -37,4 +37,14 @@ namespace SDLEngine
 			_needsMatrixUpdate = false;
 		}
 	}
+	glm::vec2 Camera2D::ConvertScreenToWorld(glm::vec2 screenCoords)
+	{
+		//centralize
+		screenCoords -= glm::vec2(_screenWidth / 2, _screenHeight / 2);
+		//scale
+		screenCoords /= _scale;
+		//translate with cam pos
+		screenCoords += _position;
+		return screenCoords;
+	}
 }

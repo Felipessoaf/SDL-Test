@@ -2,7 +2,8 @@
 
 namespace SDLEngine
 {
-	InputManager::InputManager()
+	InputManager::InputManager() :
+		_mouseCoords(0.0f)
 	{
 	}
 
@@ -18,6 +19,12 @@ namespace SDLEngine
 	void InputManager::ReleaseKey(unsigned int keyID)
 	{
 		_keyMap[keyID] = false;
+	}
+
+	void InputManager::SetMouseCoords(float x, float y)
+	{
+		_mouseCoords.x = x;
+		_mouseCoords.y = y;
 	}
 
 	bool InputManager::IsKeyPressed(unsigned int keyID)
