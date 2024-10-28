@@ -14,6 +14,8 @@
 #include <SDLEngine/InputManager.h>
 #include <SDLEngine/Timing.h>
 
+#include "Bullet.h"
+
 enum class GameState
 {
 	PLAY,
@@ -48,6 +50,8 @@ private:
 
 	SDLEngine::InputManager _inputManager;
 	SDLEngine::FPSLimiter _fpsLimiter;
+
+	std::vector<Bullet> _bullets;
 
 	float _fps;
 	float _maxFPS;

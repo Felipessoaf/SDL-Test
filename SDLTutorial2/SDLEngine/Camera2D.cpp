@@ -39,6 +39,8 @@ namespace SDLEngine
 	}
 	glm::vec2 Camera2D::ConvertScreenToWorld(glm::vec2 screenCoords)
 	{
+		//invert y
+		screenCoords.y = _screenHeight - screenCoords.y;
 		//centralize
 		screenCoords -= glm::vec2(_screenWidth / 2, _screenHeight / 2);
 		//scale

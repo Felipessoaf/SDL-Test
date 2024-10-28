@@ -60,6 +60,19 @@ void MainGame::GameLoop()
 
 		_camera2D.Update();
 
+		for (int i = 0; i < _bullets.size();)
+		{
+			if (_bullets[i].Update())
+			{
+				_bullets[i] = _bullets.back();
+				_bullets.pop_back();
+			}
+			else
+			{
+				i++;
+			}
+		}
+
 		DrawGame();
 
 		_fps = _fpsLimiter.End();
@@ -142,7 +155,12 @@ void MainGame::ProcessInput()
 	{
 		glm::vec2 mouseCoords = _inputManager.GetMouseCoords();
 		mouseCoords = _camera2D.ConvertScreenToWorld(mouseCoords);
-		std::cout << mouseCoords.x << " " << mouseCoords.y << std::endl;
+		
+		glm::vec2 playerPosition(0.0f);
+		glm::vec2 direction = mouseCoords - playerPosition;
+		direction = glm::normalize(direction);
+
+		_bullets.emplace_back(mouseCoords, direction, 0.01f, 1000);
 	}		
 }
 
@@ -172,6 +190,11 @@ void MainGame::DrawGame()
 	color.a = 255;
 
 	_spriteBatch.Draw(pos, uv, texture.id, 0.0f, color);
+
+	for (int i = 0; i < _bullets.size(); i++)
+	{
+		_bullets[i].Draw(_spriteBatch);
+	}
 
 	_spriteBatch.End();
 	_spriteBatch.RenderBatch();
