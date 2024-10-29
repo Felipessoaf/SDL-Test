@@ -10,6 +10,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDLTutorial2", "SDLTutorial
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDLEngine", "SDLEngine\SDLEngine.vcxproj", "{38A73659-2912-4F9A-AB01-222C3A689E78}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZombieGame", "ZombieGame\ZombieGame.vcxproj", "{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}"
+	ProjectSection(ProjectDependencies) = postProject
+		{38A73659-2912-4F9A-AB01-222C3A689E78} = {38A73659-2912-4F9A-AB01-222C3A689E78}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -34,6 +39,14 @@ Global
 		{38A73659-2912-4F9A-AB01-222C3A689E78}.Release|x64.Build.0 = Release|x64
 		{38A73659-2912-4F9A-AB01-222C3A689E78}.Release|x86.ActiveCfg = Release|Win32
 		{38A73659-2912-4F9A-AB01-222C3A689E78}.Release|x86.Build.0 = Release|Win32
+		{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}.Debug|x64.ActiveCfg = Debug|x64
+		{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}.Debug|x64.Build.0 = Debug|x64
+		{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}.Debug|x86.ActiveCfg = Debug|Win32
+		{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}.Debug|x86.Build.0 = Debug|Win32
+		{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}.Release|x64.ActiveCfg = Release|x64
+		{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}.Release|x64.Build.0 = Release|x64
+		{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}.Release|x86.ActiveCfg = Release|Win32
+		{C8FE915D-4FB3-48EE-B992-85C3A5FD8848}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
