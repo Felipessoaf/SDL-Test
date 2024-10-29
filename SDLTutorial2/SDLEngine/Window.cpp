@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "Errors.h"
+#include "Vertex.h"
 
 namespace SDLEngine
 {
@@ -11,7 +12,7 @@ namespace SDLEngine
 	{
 	}
 
-	int Window::Create(std::string windowName, int screenWidth, int screenHeight, unsigned int currentFlags)
+	int Window::Create(std::string windowName, int screenWidth, int screenHeight, unsigned int currentFlags, const Color& backgroundColor)
 	{
 		Uint32 flags = SDL_WINDOW_OPENGL;
 
@@ -50,7 +51,7 @@ namespace SDLEngine
 		std::printf("*** OpenGL Version: %s ***\n", glGetString(GL_VERSION));
 
 		//background color
-		glClearColor(0.0f, 0.0f, 1.0f, 1);
+		glClearColor(backgroundColor.r / 255.0f, backgroundColor.g / 255.0f, backgroundColor.b / 255.0f, backgroundColor.a / 255.0f);
 
 		//Set VSYNC
 		SDL_GL_SetSwapInterval(0);

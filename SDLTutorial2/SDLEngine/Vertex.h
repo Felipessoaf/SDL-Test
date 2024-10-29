@@ -12,6 +12,16 @@ namespace SDLEngine
 
 	struct Color
 	{
+		Color() {}
+		Color(GLubyte r, GLubyte g, GLubyte b, GLubyte a) :
+			r (r),
+			g (g),
+			b (b),
+			a (a)
+		{
+
+		}
+
 		GLubyte r;
 		GLubyte g;
 		GLubyte b;

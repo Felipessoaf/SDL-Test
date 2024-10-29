@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "Vertex.h"
+
 namespace SDLEngine
 {
 	enum WindowFlags
@@ -20,7 +22,7 @@ namespace SDLEngine
 		Window();
 		~Window();
 
-		int Create(std::string windowName, int screenWidth, int screenHeight, unsigned int currentFlags);
+		int Create(std::string windowName, int screenWidth, int screenHeight, unsigned int currentFlags, const Color& backgroundColor);
 
 		void SwapBuffer();
 

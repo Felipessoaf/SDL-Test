@@ -32,7 +32,8 @@ void MainGame::InitSystems()
 {
 	SDLEngine::init();
 
-	_window.Create("Game Engine", _screenWidth, _screenHeight, 0);
+	SDLEngine::Color color(242, 199, 80, 255);
+	_window.Create("Game Engine", _screenWidth, _screenHeight, 0, color);
 
 	InitShaders();
 
@@ -167,12 +168,8 @@ void MainGame::DrawGame()
 
 	glm::vec4 pos(0.0f, 0.0f, 50.0f, 50.0f);
 	glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
-	static SDLEngine::GLTexture texture = SDLEngine::ResourceManager::GetTexture("Textures/character/idle/i1.png");
-	SDLEngine::Color color;
-	color.r = 255;
-	color.g = 255;
-	color.b = 255;
-	color.a = 255;
+	static SDLEngine::GLTexture texture = SDLEngine::ResourceManager::GetTexture("Textures/Agents/human_m.png");
+	SDLEngine::Color color(255, 255, 255, 255);
 
 	_spriteBatch.Draw(pos, uv, texture.id, 0.0f, color);
 
