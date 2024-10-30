@@ -4,6 +4,7 @@
 #include <GL/glew.h>
 
 #include <vector>
+#include <memory>
 
 #include <SDLEngine/GLSLProgram.h>
 #include <SDLEngine/Sprite.h>		 
@@ -13,6 +14,8 @@
 #include <SDLEngine/SpriteBatch.h>
 #include <SDLEngine/InputManager.h>
 #include <SDLEngine/Timing.h>
+
+#include "Agent.h"
 
 enum class GameState
 {
@@ -31,27 +34,30 @@ public:
 private:
 	void InitSystems();
 	void InitShaders();
+	void InitMap();
 	void GameLoop();
 	void ProcessInput();
 	void DrawGame();
 
-	SDLEngine::Window _window;
-	int _screenWidth;
-	int _screenHeight;
+	SDLEngine::Window m_window;
+	int m_screenWidth;
+	int m_screenHeight;
 
-	GameState _gameState;
+	GameState m_gameState;
 
-	SDLEngine::GLSLProgram _colorProgram;
-	SDLEngine::Camera2D _camera2D;
+	SDLEngine::GLSLProgram m_colorProgram;
+	SDLEngine::Camera2D m_camera2D;
 
-	SDLEngine::SpriteBatch _spriteBatch;
+	SDLEngine::SpriteBatch m_spriteBatch;
 
-	SDLEngine::InputManager _inputManager;
-	SDLEngine::FPSLimiter _fpsLimiter;
+	SDLEngine::InputManager m_inputManager;
+	SDLEngine::FPSLimiter m_fpsLimiter;
 
-	float _fps;
-	float _maxFPS;
+	std::vector<std::shared_ptr<Agent>> m_agents;
 
-	float _time;
+	float m_fps;
+	float m_maxFPS;
+
+	float m_time;
 };
 

@@ -1,5 +1,11 @@
 #pragma once
-class Human
-{
-};
 
+#include "Agent.h"
+
+class Human : public Agent
+{
+public:
+	using Agent::Agent;
+
+	virtual void UpdateDirection() override;
+};

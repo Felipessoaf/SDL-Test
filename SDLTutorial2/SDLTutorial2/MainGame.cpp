@@ -8,13 +8,13 @@
 #include <string>
 
 MainGame::MainGame() :
-	_screenWidth(1024), 
-	_screenHeight(720), 
-	_gameState(GameState::PLAY), 
-	_time(0.0f),
-	_maxFPS(60.0f)
+	m_screenWidth(1024), 
+	m_screenHeight(720), 
+	m_gameState(GameState::PLAY), 
+	m_time(0.0f),
+	m_maxFPS(60.0f)
 {
-	_camera2D.Init(_screenWidth, _screenHeight);
+	m_camera2D.Init(m_screenWidth, m_screenHeight);
 }
 
 MainGame::~MainGame()
@@ -32,33 +32,33 @@ void MainGame::InitSystems()
 {
 	SDLEngine::init();
 
-	_window.Create("Game Engine", _screenWidth, _screenHeight, 0);
+	m_window.Create("Game Engine", m_screenWidth, m_screenHeight, 0, SDLEngine::Color(0,0,255,255));
 
 	InitShaders();
 
-	_spriteBatch.Init();
-	_fpsLimiter.Init(_maxFPS);
+	m_spriteBatch.Init();
+	m_fpsLimiter.Init(m_maxFPS);
 }
 
 void MainGame::InitShaders()
 {
-	_colorProgram.CompileShaders("Shaders/ColorShading.vert", "Shaders/ColorShading.frag");
-	_colorProgram.AddAttribute("vertexPosition");
-	_colorProgram.AddAttribute("vertexColor");
-	_colorProgram.AddAttribute("vertexUV");
-	_colorProgram.LinkShaders();
+	m_colorProgram.CompileShaders("Shaders/ColorShading.vert", "Shaders/ColorShading.frag");
+	m_colorProgram.AddAttribute("vertexPosition");
+	m_colorProgram.AddAttribute("vertexColor");
+	m_colorProgram.AddAttribute("vertexUV");
+	m_colorProgram.LinkShaders();
 }
 
 void MainGame::GameLoop()
 {
-	while (_gameState != GameState::EXIT)
+	while (m_gameState != GameState::EXIT)
 	{
-		_fpsLimiter.Begin();
+		m_fpsLimiter.Begin();
 
 		ProcessInput();
-		_time += 0.01f;
+		m_time += 0.01f;
 
-		_camera2D.Update();
+		m_camera2D.Update();
 
 		for (int i = 0; i < _bullets.size();)
 		{
@@ -75,13 +75,13 @@ void MainGame::GameLoop()
 
 		DrawGame();
 
-		_fps = _fpsLimiter.End();
+		m_fps = m_fpsLimiter.End();
 
 		static int frameCounter = 0;
 		frameCounter++;
 		if (frameCounter == 10000)
 		{
-			std::cout << _fps << std::endl;
+			std::cout << m_fps << std::endl;
 			frameCounter = 0;
 		}
 	}
@@ -99,62 +99,62 @@ void MainGame::ProcessInput()
 		switch (ev.type)
 		{
 			case SDL_QUIT:
-				_gameState = GameState::EXIT;
+				m_gameState = GameState::EXIT;
 				break;
 			case SDL_MOUSEMOTION:
-				_inputManager.SetMouseCoords(ev.motion.x, ev.motion.y);
+				m_inputManager.SetMouseCoords(ev.motion.x, ev.motion.y);
 				break;
 			case SDL_KEYDOWN:
-				_inputManager.PressKey(ev.key.keysym.sym);
+				m_inputManager.PressKey(ev.key.keysym.sym);
 				break;
 			case SDL_KEYUP:
-				_inputManager.ReleaseKey(ev.key.keysym.sym);
+				m_inputManager.ReleaseKey(ev.key.keysym.sym);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				_inputManager.PressKey(ev.button.button);
+				m_inputManager.PressKey(ev.button.button);
 				break;
 			case SDL_MOUSEBUTTONUP:
-				_inputManager.ReleaseKey(ev.button.button);
+				m_inputManager.ReleaseKey(ev.button.button);
 				break;
 			default:
 				break;
 		}
 	}
 
-	if (_inputManager.IsKeyPressed(SDLK_w))
+	if (m_inputManager.IsKeyPressed(SDLK_w))
 	{
-		_camera2D.SetPosition(_camera2D.GetPosition() + glm::vec2(0.0f, CAMERA_SPEED));
+		m_camera2D.SetPosition(m_camera2D.GetPosition() + glm::vec2(0.0f, CAMERA_SPEED));
 	}
 		
-	if (_inputManager.IsKeyPressed(SDLK_s))
+	if (m_inputManager.IsKeyPressed(SDLK_s))
 	{
-		_camera2D.SetPosition(_camera2D.GetPosition() + glm::vec2(0.0f, -CAMERA_SPEED));
+		m_camera2D.SetPosition(m_camera2D.GetPosition() + glm::vec2(0.0f, -CAMERA_SPEED));
 	}
 		
-	if (_inputManager.IsKeyPressed(SDLK_a))
+	if (m_inputManager.IsKeyPressed(SDLK_a))
 	{
-		_camera2D.SetPosition(_camera2D.GetPosition() + glm::vec2(-CAMERA_SPEED, 0.0f));
+		m_camera2D.SetPosition(m_camera2D.GetPosition() + glm::vec2(-CAMERA_SPEED, 0.0f));
 	}
 		
-	if (_inputManager.IsKeyPressed(SDLK_d))
+	if (m_inputManager.IsKeyPressed(SDLK_d))
 	{
-		_camera2D.SetPosition(_camera2D.GetPosition() + glm::vec2(CAMERA_SPEED, 0.0f));
+		m_camera2D.SetPosition(m_camera2D.GetPosition() + glm::vec2(CAMERA_SPEED, 0.0f));
 	}
 		
-	if (_inputManager.IsKeyPressed(SDLK_q))
+	if (m_inputManager.IsKeyPressed(SDLK_q))
 	{
-		_camera2D.SetScale(_camera2D.GetScale() + SCALE_SPEED);
+		m_camera2D.SetScale(m_camera2D.GetScale() + SCALE_SPEED);
 	}
 		
-	if (_inputManager.IsKeyPressed(SDLK_e))
+	if (m_inputManager.IsKeyPressed(SDLK_e))
 	{
-		_camera2D.SetScale(_camera2D.GetScale() - SCALE_SPEED);
+		m_camera2D.SetScale(m_camera2D.GetScale() - SCALE_SPEED);
 	}
 
-	if (_inputManager.IsKeyPressed(SDL_BUTTON_LEFT))
+	if (m_inputManager.IsKeyPressed(SDL_BUTTON_LEFT))
 	{
-		glm::vec2 mouseCoords = _inputManager.GetMouseCoords();
-		mouseCoords = _camera2D.ConvertScreenToWorld(mouseCoords);
+		glm::vec2 mouseCoords = m_inputManager.GetMouseCoords();
+		mouseCoords = m_camera2D.ConvertScreenToWorld(mouseCoords);
 		
 		glm::vec2 playerPosition(0.0f);
 		glm::vec2 direction = mouseCoords - playerPosition;
@@ -169,16 +169,16 @@ void MainGame::DrawGame()
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	_colorProgram.Use();
+	m_colorProgram.Use();
 	glActiveTexture(GL_TEXTURE0);
-	GLint textureLocation = _colorProgram.GetUniformLocation("mySampler");
+	GLint textureLocation = m_colorProgram.GetUniformLocation("mySampler");
 	glUniform1i(textureLocation, 0);
 
-	GLint pLocation = _colorProgram.GetUniformLocation("P");
-	glm::mat4 cameraMatrix = _camera2D.GetCameraMatrix();
+	GLint pLocation = m_colorProgram.GetUniformLocation("P");
+	glm::mat4 cameraMatrix = m_camera2D.GetCameraMatrix();
 	glUniformMatrix4fv(pLocation, 1, GL_FALSE, &(cameraMatrix[0][0]));
 
-	_spriteBatch.Begin();
+	m_spriteBatch.Begin();
 
 	glm::vec4 pos(0.0f, 0.0f, 50.0f, 50.0f);
 	glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
@@ -189,18 +189,18 @@ void MainGame::DrawGame()
 	color.b = 255;
 	color.a = 255;
 
-	_spriteBatch.Draw(pos, uv, texture.id, 0.0f, color);
+	m_spriteBatch.Draw(pos, uv, texture.id, 0.0f, color);
 
 	for (int i = 0; i < _bullets.size(); i++)
 	{
-		_bullets[i].Draw(_spriteBatch);
+		_bullets[i].Draw(m_spriteBatch);
 	}
 
-	_spriteBatch.End();
-	_spriteBatch.RenderBatch();
+	m_spriteBatch.End();
+	m_spriteBatch.RenderBatch();
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-	_colorProgram.Unuse();
+	m_colorProgram.Unuse();
 
-	_window.SwapBuffer();
+	m_window.SwapBuffer();
 }

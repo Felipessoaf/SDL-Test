@@ -3,8 +3,7 @@
 #include <SDLEngine/GLTexture.h>
 #include <SDLEngine/ResourceManager.h>
 
-Agent::Agent(glm::vec2 direction, glm::vec2 position, float speed, std::string texturePath) :
-	m_direction(direction),
+Agent::Agent(glm::vec2 position, float speed, std::string texturePath) :
 	m_position(position),
 	m_speed(speed)
 {

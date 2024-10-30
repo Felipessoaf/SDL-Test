@@ -37,25 +37,25 @@ private:
 	void ProcessInput();
 	void DrawGame();
 
-	SDLEngine::Window _window;
-	int _screenWidth;
-	int _screenHeight;
+	SDLEngine::Window m_window;
+	int m_screenWidth;
+	int m_screenHeight;
 
-	GameState _gameState;
+	GameState m_gameState;
 
-	SDLEngine::GLSLProgram _colorProgram;
-	SDLEngine::Camera2D _camera2D;
+	SDLEngine::GLSLProgram m_colorProgram;
+	SDLEngine::Camera2D m_camera2D;
 
-	SDLEngine::SpriteBatch _spriteBatch;
+	SDLEngine::SpriteBatch m_spriteBatch;
 
-	SDLEngine::InputManager _inputManager;
-	SDLEngine::FPSLimiter _fpsLimiter;
+	SDLEngine::InputManager m_inputManager;
+	SDLEngine::FPSLimiter m_fpsLimiter;
 
 	std::vector<Bullet> _bullets;
 
-	float _fps;
-	float _maxFPS;
+	float m_fps;
+	float m_maxFPS;
 
-	float _time;
+	float m_time;
 };
 
